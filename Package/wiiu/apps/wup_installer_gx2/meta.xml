@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<app version="1">
+  <name>WUP Installer GX2</name>
+  <coder>Dj_Skual</coder>
+  <url>https://sourceforge.net/projects/wup-installer-gx2/</url>
+  <version>v1.3 rev21</version>
+  <release_date>20170109083111</release_date>
+  <short_description>WiiU public title installer.</short_description> 
+  <long_description>This application can install public titles such as games, game updates or DLC to your system memory (NAND) or the WiiU formatted USB.
+This application is based on "WUP Installer y Mod" by Yardape and the GUI from "Loadiine GX2" sources.
+
+This version work from HBL and HBL channel.
+
+Thanks to:
+  Loadiine GX2 team for GUI sources.
+  Yardape for installer sources.
+
+  Links:
+  https://sourceforge.net/projects/wup-installer-gx2/
+  </long_description> 
+  <category>tool</category> 
+</app>

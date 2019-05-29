@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<app version="1">
+  <name>Mocha CFW</name>
+  <coder>dimok</coder>
+  <version>0.2</version>
+  <url>https://gbatemp.net/threads/mocha-cfw-the-sweet-chocalate-to-your-latte.452940/</url>
+  <release_date>20161212200000</release_date>
+  <short_description>Mocha Custom Firmware</short_description>
+  <long_description>Mocha CFW is a custom firmware that is derived from iosuhax. It offers all the features of iosuhax and some addional features without the requirement of a fw.img on the SD card. Furthermore it combines all the current features of a custom firmware such as sysNAND or redNAND with signature patches into one application with a configuration setting.
+
+Mocha CFW hooks itself into the IOS launch process, right before it jumps into the bootrom, and patches the (at this point) decrypted IOS ELF in memory with new functions.
+
+New features
+
+    fw.img less custom firmware
+    sysNAND or redNAND patching in one application selected in a setting
+    SEEPROM redirection to/from SD card
+    OTP redirection from SD card
+    custom launch image on load of the custom firmware if exist on sd card (sd:/wiiu/apps/mocha/launch_image.tga)
+  </long_description>
+  <category>tool</category>
+</app>

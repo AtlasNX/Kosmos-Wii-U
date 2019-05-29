@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<app version="1">
+  <name>HB App Store</name>
+  <coder>vgmoose</coder>
+  <version>2.1</version>
+  <release_date>20160209200000</release_date>
+  <url>https://github.com/vgmoose/hb-appstore</url>
+  <short_description>Download homebrew apps</short_description>
+<long_description>Homebrew App Store allows you to download homebrew apps for HBL directly in the app. Installed apps can also be reinstalled, updated, or deleted.
+
+Music by (T-T)b (google t tb chiptunes!)
+Thanks to pwsincd, brienj, and dimok!
+
+source code: https://github.com/vgmoose/hb-appstore
+</long_description>
+<category>tool</category>
+
+</app>

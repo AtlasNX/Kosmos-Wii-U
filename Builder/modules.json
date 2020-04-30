@@ -1,1 +1,105 @@
-[]
+[
+    {
+        "name": "Haxchi",
+        "download_function_name": "download_haxchi",
+        "git": {
+            "service": 0,
+            "org_name": "FIX94",
+            "repo_name": "haxchi",
+            "asset_patterns": [
+                ".*Haxchi.*\\.zip"
+            ],
+            "group": null
+        },
+        "sdsetup": {
+            "included": false,
+            "name": null
+        }
+    },
+    {
+        "name": "HID to VPAD",
+        "download_function_name": "download_hid_to_vpad",
+        "git": {
+            "service": 0,
+            "org_name": "Maschell",
+            "repo_name": "hid_to_vpad",
+            "asset_patterns": [
+                ".*\\.zip"
+            ],
+            "group": null
+        },
+        "sdsetup": {
+            "included": false,
+            "name": null
+        }
+    },
+    {
+        "name": "Homebrew App Store",
+        "download_function_name": "download_hb_appstore",
+        "git": {
+            "service": 1,
+            "org_name": "4TU",
+            "repo_name": "hb-appstore",
+            "asset_patterns": [
+                "\\[.*\\.rpx\\.zip\\]\\((.*\\.rpx\\.zip)\\)"
+            ],
+            "group": 0
+        },
+        "sdsetup": {
+            "included": false,
+            "name": null
+        }
+    },
+    {
+        "name": "Homebrew Launcher",
+        "download_function_name": "download_homebrew_launcher",
+        "git": {
+            "service": 0,
+            "org_name": "dimok789",
+            "repo_name": "homebrew_launcher",
+            "asset_patterns": [
+                ".*homebrew_launcher_rpx.*\\.zip",
+                ".*homebrew_launcher_channel.*\\.zip"
+            ],
+            "group": null
+        },
+        "sdsetup": {
+            "included": false,
+            "name": null
+        }
+    },
+    {
+        "name": "NAND Dumper",
+        "download_function_name": "download_nanddumper",
+        "git": {
+            "service": 0,
+            "org_name": "koolkdev",
+            "repo_name": "wiiu-nanddumper",
+            "asset_patterns": [
+                ".*\\.zip"
+            ],
+            "group": null
+        },
+        "sdsetup": {
+            "included": false,
+            "name": null
+        }
+    },
+    {
+        "name": "SaveMii",
+        "download_function_name": "download_savemii",
+        "git": {
+            "service": 0,
+            "org_name": "Ryuzaki-MrL",
+            "repo_name": "savemii",
+            "asset_patterns": [
+                ".*\\.zip"
+            ],
+            "group": null
+        },
+        "sdsetup": {
+            "included": false,
+            "name": null
+        }
+    }
+]

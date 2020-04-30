@@ -107,7 +107,17 @@ def find_asset(release, pattern):
 
     return None
 
-# TODO: Build download functions for modules.
+def download_haxchi(module, temp_directory, kosmos_version, kosmos_build):
+
+def download_hid_to_vpad(module, temp_directory, kosmos_version, kosmos_build):
+
+def download_hb_appstore(module, temp_directory, kosmos_version, kosmos_build):
+
+def download_homebrew_launcher(module, temp_directory, kosmos_version, kosmos_build):
+
+def download_nanddumper(module, temp_directory, kosmos_version, kosmos_build):
+
+def download_savemii(module, temp_directory, kosmos_version, kosmos_build):
 
 def build(temp_directory, kosmos_version, kosmos_build, auto_build):
     results = []

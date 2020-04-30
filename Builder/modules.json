@@ -122,7 +122,7 @@
         "download_function_name": "download_savemii",
         "git": {
             "service": 0,
-            "org_name": "Ryuzaki-MrL",
+            "org_name": "GabyPCgeeK",
             "repo_name": "savemii",
             "asset_patterns": [
                 ".*\\.zip"

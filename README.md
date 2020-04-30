@@ -16,6 +16,7 @@
 Follow this guide: https://guide.teamatlasnx.com
 
 ## Featuring
+* [ftpiiu everywhere](https://github.com/FIX94/ftpiiu)
 * [Haxchi](https://github.com/FIX94/haxchi)
 * [HID to VPAD](https://github.com/Maschell/hid_to_vpad/)
 * [Homebrew App Store](https://gitlab.com/4TU/hb-appstore)
@@ -24,4 +25,5 @@ Follow this guide: https://guide.teamatlasnx.com
 * [Mocha CFW](https://github.com/dimok789/mocha)
 * [NAND Dumper](https://github.com/koolkdev/wiiu-nanddumper)
 * [SaveMii](https://github.com/GabyPCgeeK/savemii)
+* [SDCafiine](https://github.com/Maschell/SDCafiine)
 * [WUP Installer GX2](https://sourceforge.net/projects/wup-installer-gx2/)

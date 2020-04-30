@@ -1,5 +1,23 @@
 [
     {
+        "name": "ftpiiu everywhere",
+        "download_function_name": "download_ftpiiu",
+        "git": {
+            "service": 0,
+            "org_name": "FIX94",
+            "repo_name": "ftpiiu",
+            "asset_patterns": [
+                ".*\\.elf"
+            ],
+            "group": null,
+            "version_pattern": null
+        },
+        "sdsetup": {
+            "included": false,
+            "name": null
+        }
+    },
+    {
         "name": "Haxchi",
         "download_function_name": "download_haxchi",
         "git": {
@@ -131,6 +149,24 @@
             "service": 0,
             "org_name": "GabyPCgeeK",
             "repo_name": "savemii",
+            "asset_patterns": [
+                ".*\\.zip"
+            ],
+            "group": null,
+            "version_pattern": null
+        },
+        "sdsetup": {
+            "included": false,
+            "name": null
+        }
+    },
+    {
+        "name": "SDCafiine",
+        "download_function_name": "download_sdcafiine",
+        "git": {
+            "service": 0,
+            "org_name": "Maschell",
+            "repo_name": "SDCafiine",
             "asset_patterns": [
                 ".*\\.zip"
             ],

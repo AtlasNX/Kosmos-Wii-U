@@ -35,7 +35,7 @@ gh = Github(config.github_username, config.github_password)
 gl = Gitlab('https://gitlab.com', private_token=config.gitlab_private_access_token)
 gl.auth()
 
-def get_latest_release(module):
+def get_latest_release(module, include_prereleases = True):
     if common.GitService(module['git']['service']) == common.GitService.GitHub:
         try:
             repo = gh.get_repo(f'{module["git"]["org_name"]}/{module["git"]["repo_name"]}')
@@ -47,8 +47,15 @@ def get_latest_release(module):
         if releases.totalCount == 0:
             print(f'[Error] Unable to find any releases for repo: {module["git"]["org_name"]}/{module["git"]["repo_name"]}')
             return None
+
+        if include_prereleases:
+            return releases[0]
+
+        for release in releases:
+            if not release.prerelease:
+                return release
         
-        return releases[0]
+        return None
     elif common.GitService(module['git']['service']) == common.GitService.GitLab:
         try:
             project = gl.projects.get(f'{module["git"]["org_name"]}/{module["git"]["repo_name"]}')
@@ -154,6 +161,19 @@ def get_version(module, release, index):
 
         return groups[0]
 
+def download_ftpiiu(module, temp_directory, kosmos_version, kosmos_build):
+    release = get_latest_release(module)
+    app_path = download_asset(module, release, 0)
+    if app_path is None:
+        return None
+
+    common.mkdir(os.path.join(temp_directory, 'wiiu', 'apps', 'ftpiiu_everywhere'))
+    shutil.move(app_path, os.path.join(temp_directory, 'wiiu', 'apps', 'ftpiiu_everywhere', 'ftpiiu_everywhere.elf'))
+    common.copy_module_file('ftpiiu', 'icon.png', os.path.join(temp_directory, 'wiiu', 'apps', 'ftpiiu_everywhere', 'icon.png'))
+    common.copy_module_file('ftpiiu', 'meta.xml', os.path.join(temp_directory, 'wiiu', 'apps', 'ftpiiu_everywhere', 'meta.xml'))
+
+    return get_version(module, release, 0)
+
 def download_haxchi(module, temp_directory, kosmos_version, kosmos_build):
     release = get_latest_release(module)
     bundle_path = download_asset(module, release, 0)
@@ -168,7 +188,7 @@ def download_haxchi(module, temp_directory, kosmos_version, kosmos_build):
     return get_version(module, release, 0)
 
 def download_hid_to_vpad(module, temp_directory, kosmos_version, kosmos_build):
-    release = get_latest_release(module)
+    release = get_latest_release(module, False)
     bundle_path = download_asset(module, release, 0)
     if bundle_path is None:
         return None
@@ -261,6 +281,19 @@ def download_savemii(module, temp_directory, kosmos_version, kosmos_build):
     common.mkdir(os.path.join(temp_directory, 'wiiu', 'apps'))
     with zipfile.ZipFile(bundle_path, 'r') as zip_ref:
         zip_ref.extractall(os.path.join(temp_directory, 'wiiu', 'apps'))
+
+    common.delete_path(bundle_path)
+
+    return get_version(module, release, 0)
+
+def download_sdcafiine(module, temp_directory, kosmos_version, kosmos_build):
+    release = get_latest_release(module, False)
+    bundle_path = download_asset(module, release, 0)
+    if bundle_path is None:
+        return None
+
+    with zipfile.ZipFile(bundle_path, 'r') as zip_ref:
+        zip_ref.extractall(temp_directory)
 
     common.delete_path(bundle_path)
 

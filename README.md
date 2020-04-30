@@ -23,5 +23,5 @@ Follow this guide: https://guide.teamatlasnx.com
 * [JsTypeHax](https://github.com/wiiu-env/JsTypeHax)
 * [Mocha CFW](https://github.com/dimok789/mocha)
 * [NAND Dumper](https://github.com/koolkdev/wiiu-nanddumper)
-* [SaveMii](https://github.com/Ryuzaki-MrL/savemii)
+* [SaveMii](https://github.com/GabyPCgeeK/savemii)
 * [WUP Installer GX2](https://sourceforge.net/projects/wup-installer-gx2/)

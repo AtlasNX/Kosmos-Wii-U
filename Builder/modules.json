@@ -69,6 +69,38 @@
         }
     },
     {
+        "name": "JsTypeHax",
+        "download_function_name": "download_jstypehax",
+        "git": {
+            "service": 0,
+            "org_name": "wiiu-env",
+            "repo_name": "JsTypeHax",
+            "asset_patterns": [],
+            "group": null
+        },
+        "sdsetup": {
+            "included": false,
+            "name": null
+        }
+    },
+    {
+        "name": "Mocha",
+        "download_function_name": "download_mocha",
+        "git": {
+            "service": 0,
+            "org_name": "dimok789",
+            "repo_name": "mocha",
+            "asset_patterns": [
+                ".*\\.zip"
+            ],
+            "group": null
+        },
+        "sdsetup": {
+            "included": false,
+            "name": null
+        }
+    },
+    {
         "name": "NAND Dumper",
         "download_function_name": "download_nanddumper",
         "git": {
@@ -96,6 +128,22 @@
                 ".*\\.zip"
             ],
             "group": null
+        },
+        "sdsetup": {
+            "included": false,
+            "name": null
+        }
+    },
+    {
+        "name": "WUP Installer GX2",
+        "download_function_name": "download_wup_installer_gx2",
+        "git": {
+            "service": 2,
+            "org_name": "",
+            "repo_name": "wup-installer-gx2",
+            "asset_patterns": [
+                ".*WUP_Installer_GX2.*\\(HBL_HBC\\)\\.zip"
+            ]
         },
         "sdsetup": {
             "included": false,

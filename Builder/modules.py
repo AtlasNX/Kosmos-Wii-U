@@ -48,7 +48,7 @@ def get_latest_release(module):
             return None
         
         return releases[0]
-    else:
+    else if common.GitService(module['git']['service']) == common.GitService.GitLab:
         try:
             project = gl.projects.get(f'{module["git"]["org_name"]}/{module["git"]["repo_name"]}')
         except:
@@ -62,6 +62,8 @@ def get_latest_release(module):
 
         print(f'[Error] Unable to find any releases for repo: {module["git"]["org_name"]}/{module["git"]["repo_name"]}')
         return None
+    else:
+        # TODO: SourceForge
 
 def download_asset(module, release, index):
     pattern = module['git']['asset_patterns'][index]
@@ -84,7 +86,7 @@ def download_asset(module, release, index):
         urllib.request.urlretrieve(matched_asset.browser_download_url, download_path)
 
         return download_path
-    else:
+    else if common.GitService(module['git']['service']) == common.GitService.GitLab:
         group = module['git']['group']
 
         match = re.search(pattern, release.release['description'])
@@ -99,6 +101,8 @@ def download_asset(module, release, index):
         urllib.request.urlretrieve(f'https://gitlab.com/{module["git"]["org_name"]}/{module["git"]["repo_name"]}{groups[group]}', download_path)
 
         return download_path
+    else:
+        # TODO: SourceForge
 
 def find_asset(release, pattern):
     for asset in release.get_assets():
@@ -108,16 +112,119 @@ def find_asset(release, pattern):
     return None
 
 def download_haxchi(module, temp_directory, kosmos_version, kosmos_build):
+    release = get_latest_release(module)
+    bundle_path = download_asset(module, release, 0)
+    if bundle_path is None:
+        return None
+
+    with zipfile.ZipFile(bundle_path, 'r') as zip_ref:
+        zip_ref.extractall(temp_directory)
+
+    common.delete_path(bundle_path)
+
+    return release.tag_name
 
 def download_hid_to_vpad(module, temp_directory, kosmos_version, kosmos_build):
+    release = get_latest_release(module)
+    bundle_path = download_asset(module, release, 0)
+    if bundle_path is None:
+        return None
+
+    with zipfile.ZipFile(bundle_path, 'r') as zip_ref:
+        zip_ref.extractall(temp_directory)
+
+    common.delete_path(bundle_path)
+
+    return release.tag_name
 
 def download_hb_appstore(module, temp_directory, kosmos_version, kosmos_build):
+    release = get_latest_release(module)
+    bundle_path = download_asset(module, release, 0)
+    if bundle_path is None:
+        return None
+
+    common.mkdir(os.path.join(temp_directory, 'wiiu', 'apps', 'appstore'))
+    with zipfile.ZipFile(bundle_path, 'r') as zip_ref:
+        zip_ref.extractall(os.path.join(temp_directory, 'wiiu', 'apps', 'appstore'))
+    
+    common.delete_path(bundle_path)
+
+    return release.name
 
 def download_homebrew_launcher(module, temp_directory, kosmos_version, kosmos_build):
+    release = get_latest_release(module)
+    app_path = download_asset(module, release, 0)
+    if app_path is None:
+        return None
+
+    with zipfile.ZipFile(app_path, 'r') as zip_ref:
+        zip_ref.extractall(temp_directory)
+
+    common.delete_path(app_path)
+
+    channel_path = download_asset(module, release, 1)
+    if channel_path is None:
+        return None
+
+    common.mkdir(os.path.join(temp_directory, 'install', 'hbc'))
+    with zipfile.ZipFile(channel_path, 'r') as zip_ref:
+        zip_ref.extractall(os.path.join(temp_directory, 'install', 'hbc'))
+
+    common.delete_path(channel_path)
+
+    return release.tag_name
+
+def download_jstypehax(module, temp_directory, kosmos_version, kosmos_build):
+    common.mkdir(os.path.join(temp_directory, 'wiiu'))
+    common.copy_module_file('jstypehax', 'payload.elf', os.path.join(temp_directory, 'wiiu', 'payload.elf'))
+    return 'latest'
+
+def download_mocha(module, temp_directory, kosmos_version, kosmos_build):
+    release = get_latest_release(module)
+    bundle_path = download_asset(module, release, 0)
+    if bundle_path is None:
+        return None
+
+    common.mkdir(os.path.join(temp_directory, 'wiiu', 'apps', 'mocha'))
+    with zipfile.ZipFile(bundle_path, 'r') as zip_ref:
+        zip_ref.extractall(os.path.join(temp_directory, 'wiiu', 'apps', 'mocha'))
+
+    common.delete_path(bundle_path)
+    common.copy_module_file('mocha', 'config.ini', os.path.join(temp_directory, 'wiiu', 'apps', 'mocha', 'config.ini'))
+    common.copy_module_file('mocha', 'icon.png', os.path.join(temp_directory, 'wiiu', 'apps', 'mocha', 'icon.png'))
+    common.copy_module_file('mocha', 'meta.xml', os.path.join(temp_directory, 'wiiu', 'apps', 'mocha', 'meta.xml'))
+
+    return release.tag_name
 
 def download_nanddumper(module, temp_directory, kosmos_version, kosmos_build):
+    release = get_latest_release(module)
+    bundle_path = download_asset(module, release, 0)
+    if bundle_path is None:
+        return None
+
+    with zipfile.ZipFile(bundle_path, 'r') as zip_ref:
+        zip_ref.extractall(temp_directory)
+
+    common.delete_path(bundle_path)
+
+    return release.tag_name
 
 def download_savemii(module, temp_directory, kosmos_version, kosmos_build):
+    release = get_latest_release(module)
+    bundle_path = download_asset(module, release, 0)
+    if bundle_path is None:
+        return None
+
+    common.mkdir(os.path.join(temp_directory, 'wiiu', 'apps'))
+    with zipfile.ZipFile(bundle_path, 'r') as zip_ref:
+        zip_ref.extractall(os.path.join(temp_directory, 'wiiu', 'apps'))
+
+    common.delete_path(bundle_path)
+
+    return release.tag_name
+
+def download_wup_installer_gx2(module, temp_directory, kosmos_version, kosmos_build):
+    # TODO: Figure out SourceForge...
 
 def build(temp_directory, kosmos_version, kosmos_build, auto_build):
     results = []

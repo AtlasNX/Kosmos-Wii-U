@@ -9,7 +9,8 @@
             "asset_patterns": [
                 ".*Haxchi.*\\.zip"
             ],
-            "group": null
+            "group": null,
+            "version_pattern": null
         },
         "sdsetup": {
             "included": false,
@@ -26,7 +27,8 @@
             "asset_patterns": [
                 ".*\\.zip"
             ],
-            "group": null
+            "group": null,
+            "version_pattern": null
         },
         "sdsetup": {
             "included": false,
@@ -43,7 +45,8 @@
             "asset_patterns": [
                 "\\[.*\\.rpx\\.zip\\]\\((.*\\.rpx\\.zip)\\)"
             ],
-            "group": 0
+            "group": 0,
+            "version_pattern": null
         },
         "sdsetup": {
             "included": false,
@@ -61,7 +64,8 @@
                 ".*homebrew_launcher_rpx.*\\.zip",
                 ".*homebrew_launcher_channel.*\\.zip"
             ],
-            "group": null
+            "group": null,
+            "version_pattern": null
         },
         "sdsetup": {
             "included": false,
@@ -76,7 +80,8 @@
             "org_name": "wiiu-env",
             "repo_name": "JsTypeHax",
             "asset_patterns": [],
-            "group": null
+            "group": null,
+            "version_pattern": null
         },
         "sdsetup": {
             "included": false,
@@ -93,7 +98,8 @@
             "asset_patterns": [
                 ".*\\.zip"
             ],
-            "group": null
+            "group": null,
+            "version_pattern": null
         },
         "sdsetup": {
             "included": false,
@@ -110,7 +116,8 @@
             "asset_patterns": [
                 ".*\\.zip"
             ],
-            "group": null
+            "group": null,
+            "version_pattern": null
         },
         "sdsetup": {
             "included": false,
@@ -127,7 +134,8 @@
             "asset_patterns": [
                 ".*\\.zip"
             ],
-            "group": null
+            "group": null,
+            "version_pattern": null
         },
         "sdsetup": {
             "included": false,
@@ -143,7 +151,9 @@
             "repo_name": "wup-installer-gx2",
             "asset_patterns": [
                 ".*WUP_Installer_GX2.*\\(HBL_HBC\\)\\.zip"
-            ]
+            ],
+            "group": null,
+            "version_pattern": ".*WUP_Installer_GX2_(.*)_\\(HBL_HBC\\).*"
         },
         "sdsetup": {
             "included": false,

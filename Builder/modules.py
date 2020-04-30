@@ -28,6 +28,7 @@ import re
 import shutil
 import urllib.request
 import uuid
+import xmltodict
 import zipfile
 
 gh = Github(config.github_username, config.github_password)
@@ -48,7 +49,7 @@ def get_latest_release(module):
             return None
         
         return releases[0]
-    else if common.GitService(module['git']['service']) == common.GitService.GitLab:
+    elif common.GitService(module['git']['service']) == common.GitService.GitLab:
         try:
             project = gl.projects.get(f'{module["git"]["org_name"]}/{module["git"]["repo_name"]}')
         except:
@@ -63,7 +64,11 @@ def get_latest_release(module):
         print(f'[Error] Unable to find any releases for repo: {module["git"]["org_name"]}/{module["git"]["repo_name"]}')
         return None
     else:
-        # TODO: SourceForge
+        releases = None
+        with urllib.request.urlopen(f'https://sourceforge.net/projects/{module["git"]["repo_name"]}/rss?path=/') as fd:
+            releases = xmltodict.parse(fd.read().decode('utf-8'))
+
+        return releases
 
 def download_asset(module, release, index):
     pattern = module['git']['asset_patterns'][index]
@@ -86,7 +91,7 @@ def download_asset(module, release, index):
         urllib.request.urlretrieve(matched_asset.browser_download_url, download_path)
 
         return download_path
-    else if common.GitService(module['git']['service']) == common.GitService.GitLab:
+    elif common.GitService(module['git']['service']) == common.GitService.GitLab:
         group = module['git']['group']
 
         match = re.search(pattern, release.release['description'])
@@ -102,7 +107,20 @@ def download_asset(module, release, index):
 
         return download_path
     else:
-        # TODO: SourceForge
+        matched_item = None
+        for item in release['rss']['channel']['item']:
+            if re.search(pattern, item['title']):
+                matched_item = item
+                break
+
+        if matched_item is None:
+            print(f'[Error] Unable to find asset that match pattern: "{pattern}"')
+            return None
+
+        download_path = common.generate_temp_path()
+        urllib.request.urlretrieve(matched_item['link'], download_path)
+
+        return download_path
 
 def find_asset(release, pattern):
     for asset in release.get_assets():
@@ -110,6 +128,31 @@ def find_asset(release, pattern):
             return asset
 
     return None
+
+def get_version(module, release, index):
+    if common.GitService(module['git']['service']) == common.GitService.GitHub:
+        return release.tag_name
+    elif common.GitService(module['git']['service']) == common.GitService.GitLab:
+        return release.name
+    else:
+        matched_item = None
+        for item in release['rss']['channel']['item']:
+            if re.search(module['git']['asset_patterns'][index], item['title']):
+                matched_item = item
+                break
+
+        if matched_item is None:
+            return "Latest"
+
+        match = re.search(module['git']['version_pattern'], matched_item['title'])
+        if match is None:
+            return "Latest"
+
+        groups = match.groups()
+        if len(groups) == 0:
+            return "Latest"
+
+        return groups[0]
 
 def download_haxchi(module, temp_directory, kosmos_version, kosmos_build):
     release = get_latest_release(module)
@@ -122,7 +165,7 @@ def download_haxchi(module, temp_directory, kosmos_version, kosmos_build):
 
     common.delete_path(bundle_path)
 
-    return release.tag_name
+    return get_version(module, release, 0)
 
 def download_hid_to_vpad(module, temp_directory, kosmos_version, kosmos_build):
     release = get_latest_release(module)
@@ -135,7 +178,7 @@ def download_hid_to_vpad(module, temp_directory, kosmos_version, kosmos_build):
 
     common.delete_path(bundle_path)
 
-    return release.tag_name
+    return get_version(module, release, 0)
 
 def download_hb_appstore(module, temp_directory, kosmos_version, kosmos_build):
     release = get_latest_release(module)
@@ -149,7 +192,7 @@ def download_hb_appstore(module, temp_directory, kosmos_version, kosmos_build):
     
     common.delete_path(bundle_path)
 
-    return release.name
+    return get_version(module, release, 0)
 
 def download_homebrew_launcher(module, temp_directory, kosmos_version, kosmos_build):
     release = get_latest_release(module)
@@ -172,7 +215,7 @@ def download_homebrew_launcher(module, temp_directory, kosmos_version, kosmos_bu
 
     common.delete_path(channel_path)
 
-    return release.tag_name
+    return get_version(module, release, 0)
 
 def download_jstypehax(module, temp_directory, kosmos_version, kosmos_build):
     common.mkdir(os.path.join(temp_directory, 'wiiu'))
@@ -194,7 +237,7 @@ def download_mocha(module, temp_directory, kosmos_version, kosmos_build):
     common.copy_module_file('mocha', 'icon.png', os.path.join(temp_directory, 'wiiu', 'apps', 'mocha', 'icon.png'))
     common.copy_module_file('mocha', 'meta.xml', os.path.join(temp_directory, 'wiiu', 'apps', 'mocha', 'meta.xml'))
 
-    return release.tag_name
+    return get_version(module, release, 0)
 
 def download_nanddumper(module, temp_directory, kosmos_version, kosmos_build):
     release = get_latest_release(module)
@@ -207,7 +250,7 @@ def download_nanddumper(module, temp_directory, kosmos_version, kosmos_build):
 
     common.delete_path(bundle_path)
 
-    return release.tag_name
+    return get_version(module, release, 0)
 
 def download_savemii(module, temp_directory, kosmos_version, kosmos_build):
     release = get_latest_release(module)
@@ -221,10 +264,20 @@ def download_savemii(module, temp_directory, kosmos_version, kosmos_build):
 
     common.delete_path(bundle_path)
 
-    return release.tag_name
+    return get_version(module, release, 0)
 
 def download_wup_installer_gx2(module, temp_directory, kosmos_version, kosmos_build):
-    # TODO: Figure out SourceForge...
+    release = get_latest_release(module)
+    bundle_path = download_asset(module, release, 0)
+    if bundle_path is None:
+        return None
+
+    with zipfile.ZipFile(bundle_path, 'r') as zip_ref:
+        zip_ref.extractall(temp_directory)
+
+    common.delete_path(bundle_path)
+
+    return get_version(module, release, 0)
 
 def build(temp_directory, kosmos_version, kosmos_build, auto_build):
     results = []

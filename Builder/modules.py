@@ -184,6 +184,9 @@ def download_haxchi(module, temp_directory, kosmos_version, kosmos_build):
         zip_ref.extractall(temp_directory)
 
     common.delete_path(bundle_path)
+    common.delete_path(os.path.join(temp_directory, 'haxchi', 'config.txt'))
+    common.copy_module_file('haxchi', 'config.txt', os.path.join(temp_directory, 'haxchi', 'config.txt'))
+    common.copy_module_file('haxchi', 'homebrew_launcher.elf', os.path.join(temp_directory, 'haxchi', 'homebrew_launcher.elf'))
 
     return get_version(module, release, 0)
 

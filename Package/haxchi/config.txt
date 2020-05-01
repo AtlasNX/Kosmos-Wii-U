@@ -1,3 +1,0 @@
-b=sysmenu
-a=wiiu/apps/homebrew_launcher/homebrew_launcher.elf
-default=wiiu/apps/mocha/mocha.elf
